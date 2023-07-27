@@ -75,15 +75,17 @@ class Fulfillment(models.Model):
 
 
 @receiver(post_save, sender=Fulfillment)
-def create_fulfillment(sender, instance, **kwargs):
-    Api(
-        store_id=instance.fulfillment_order.store.ref_id,
-        access_token=instance.fulfillment_order.store.api_token
-    ).create_fulfillment(
-        fulfillment_order_id=instance.fulfillment_order.ref_id,
-        tracking_code=instance.tracking_code,
-        carrier=instance.carrier,
-        carrier_other_name=instance.carrier_other_name
-    )
-    instance.fulfillment_order.status = 'shipped'
-    instance.fulfillment_order.save()
+def create_fulfillment(sender, instance, created, **kwargs):
+    if created:
+        Api(
+            store_id=instance.fulfillment_order.store.ref_id,
+            access_token=instance.fulfillment_order.store.api_token
+        ).create_fulfillment(
+            fulfillment_order_id=instance.fulfillment_order.ref_id,
+            tracking_code=instance.tracking_code,
+            carrier=instance.carrier,
+            carrier_other_name=instance.carrier_other_name
+        )
+        instance.fulfillment_order.status = 'shipped'
+        instance.fulfillment_order.save()
+    return instance
