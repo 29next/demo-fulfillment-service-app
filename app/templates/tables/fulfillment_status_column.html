@@ -1,0 +1,7 @@
+{% if record.status == 'open' %}
+<span class="badge bg-warning">{{ record.status|capfirst }}</span>
+{% elif record.status == 'shipped' %}
+<span class="badge bg-success">{{ record.status|capfirst }}</span>
+{% elif record.status == 'canceled' %}
+<span class="badge bg-danger">{{ record.status|capfirst }}</span>
+{% endif %}

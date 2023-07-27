@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 border-bottom mb-4">
+    <h1 class="">Store {{ object.ref_id }} - Create Product</h1>
+</div>
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h4 class="card-title mb-0">Create Product</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        {% crispy form %}
+    </div>
+</div>
+{% endblock %}

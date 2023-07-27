@@ -1,0 +1,97 @@
+{% extends 'layouts/base.html' %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 border-bottom mb-4">
+    <h1 class="">Fulfillment Order #{{ object.id }}</h1>
+    <h1>
+        <span class="badge {% if object.status == 'open' %}bg-warning{% elif object.status == 'shipped' %}bg-success{% elif object.status == 'canceled' %}bg-danger{% endif %}">
+            {{ object.status|capfirst }}
+        </span>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Items</h4>
+            </div>
+            {% render_table tables.0 %}
+        </div>
+        {% if object.status == 'open' %}
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Create Fulfillment</h4>
+            </div>
+            <div class="card-body">
+                {% crispy form %}
+            </div>
+        </div>
+        {% elif object.status == 'shipped' %}
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Fulfillment</h4>
+            </div>
+            {% render_table tables.1 %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Information</h4>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Store</h4>
+                <p class="mb-0">{{ object.store }}</p>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Location</h4>
+                <p class="mb-0">{{ object.location.name }}</p>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Order Number</h4>
+                <p class="mb-0">{{ object.order_number }}</p>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Created At</h4>
+                <p class="mb-0">{{ object.created_at }}</p>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Shipping Method</h4>
+                <p class="mb-0">{{ object.shipping_method }}</p>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Address</h4>
+                <p class="mb-0">
+                    {{ object.shipping_address.first_name }} {{ object.shipping_address.last_name }}<br>
+                    {{ object.shipping_address.line1 }}<br>
+                    {{ object.shipping_address.line2 }}{% if object.shipping_address.line2 %}<br>{% endif %}
+                    {{ object.shipping_address.line4 }} {{ object.shipping_address.state }} {{ object.shipping_address.postcode }}<br>
+                    {{ object.shipping_address.country.name }}<br>
+                    {% if object.shipping_address.phone_number %}{{ object.shipping_address.phone_number }}{% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block extra_javascript %}
+<script>
+    let carrierSelect = document.getElementById('id_carrier');
+    let carrierOtherNameWrapper = document.getElementById('div_id_carrier_other_name');
+    if (carrierOtherNameWrapper) {
+        carrierOtherNameWrapper.style.display = 'none';
+        carrierSelect.addEventListener('change', function () {
+            if (this.value === 'other') {
+                carrierOtherNameWrapper.style.display = 'block';
+            } else {
+                carrierOtherNameWrapper.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}

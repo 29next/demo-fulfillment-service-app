@@ -1,0 +1,45 @@
+{% extends 'layouts/base.html' %}
+{% load render_table from django_tables2 %}
+{% block content %}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 border-bottom mb-4">
+    <h1 class="">Store {{ object.ref_id }}</h1>
+</div>
+<div class="row">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h4 class="card-title mb-0">Products</h4>
+                </div>
+                <div>
+                    <a class="btn btn-sm btn-primary" href="{% url 'stores:product-create' store.id %}">Add Product</a>
+                </div>
+            </div>
+            {% render_table tables.0 %}
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <div class="">
+                    <h4 class="card-title mb-0">Locations</h4>
+                </div>
+                <div>
+                    <a class="btn btn-sm btn-primary" href="{% url 'stores:location-create' store.id %}">Add Location</a>
+                </div>
+            </div>
+            {% render_table tables.1 %}
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Information</h4>
+            </div>
+            <div class="card-body border-bottom">
+                <h4>Store</h4>
+                <p class="mb-0">{{ object.ref_id }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

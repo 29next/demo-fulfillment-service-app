@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+
+{% block auth_form %}
+
+{% crispy form %}
+
+{% endblock %}
