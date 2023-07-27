@@ -4,13 +4,19 @@ This app demonstrates the core concepts of a [Fulfillment Service App](https://d
 
 ### Features
 
-* [Creating Fulfillment Locations](https://developers.29next.com/docs/apps/guides/fulfillment-service/#fulfillment-locations)
-* [Accepting Fulfillment Requests](https://developers.29next.com/docs/apps/guides/fulfillment-service/#accepting-fulfillment-requests)
-* [Rejecting Fulfillment Requests](https://developers.29next.com/docs/apps/guides/fulfillment-service/#rejecting-fulfillment-requests)
-* Accepting Cancellation Requests
-* Rejecting Cancellation Requests
-* [Creating Fulfillments](https://developers.29next.com/docs/apps/guides/fulfillment-service/#creating-fulfillments)
-* [App Oauth Setup Install Flow](https://developers.29next.com/docs/apps/oauth/)
+* [Creating Fulfillment Locations](https://developers.29next.com/docs/apps/guides/fulfillment-service/#fulfillment-locations)  - See example [location create api request wrapper](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/stores/api/admin.py#L42).
+* [Accepting Fulfillment Requests](https://developers.29next.com/docs/apps/guides/fulfillment-service/#accepting-fulfillment-requests) - See example [fulfillment request reciver](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/fulfillments/views.py#L20)
+* [Rejecting Fulfillment Requests](https://developers.29next.com/docs/apps/guides/fulfillment-service/#rejecting-fulfillment-requests) - See example [fulfillment request reciver](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/fulfillments/views.py#L20)
+* [Accepting Cancellation Requests](https://developers.29next.com/docs/apps/guides/fulfillment-service/#accepting-cancellation-requests) - See example [fulfillment request reciver](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/fulfillments/views.py#L20)
+* [Rejecting Cancellation Requests](https://developers.29next.com/docs/apps/guides/fulfillment-service/#rejecting-cancellation-requests) - See example [fulfillment request reciver](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/fulfillments/views.py#L20)
+* [Creating Fulfillments](https://developers.29next.com/docs/apps/guides/fulfillment-service/#creating-fulfillments) - See example [create fulfillment api wrapper](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/stores/api/admin.py#L95)
+* [App Oauth Setup Install Flow](https://developers.29next.com/docs/apps/oauth/) - See [store auth setup flow handler](https://github.com/29next/demo-fulfillment-service-app/blob/0cc598efe20a5460c4645401105f5d4b0ca0ae38/app/stores/views.py#L20)
+
+### Screenshots
+|![image](https://github.com/29next/demo-fulfillment-service-app/assets/674282/f3bc695e-6947-4aea-91dc-de28b5351e67)|![image](https://github.com/29next/demo-fulfillment-service-app/assets/674282/085ed071-a124-4da8-b850-1b2e25d269da)|
+|:-------------------------:|:-------------------------:|
+|![image](https://github.com/29next/demo-fulfillment-service-app/assets/674282/6cb4c679-1991-4211-9069-056177dd7bba)|![image](https://github.com/29next/demo-fulfillment-service-app/assets/674282/0ddf1252-f211-41fa-8675-f37d5c8846a8)|
+
 
 ### How to Setup
 
