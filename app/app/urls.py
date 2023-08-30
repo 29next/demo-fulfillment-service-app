@@ -1,5 +1,8 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.static import static
+
 
 from users import views as user_views
 
@@ -9,4 +12,4 @@ urlpatterns = [
     path('fulfillments/', include('fulfillments.urls', namespace='fulfillments')),
     path('', user_views.IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

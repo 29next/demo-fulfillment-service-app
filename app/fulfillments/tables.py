@@ -22,6 +22,7 @@ class FulfillmentOrderListTable(tables.Table):
 
 
 class FulfillmentLineItemsTable(tables.Table):
+    product = tables.TemplateColumn(template_name='tables/product_column.html')
 
     class Meta:
         model = FulfillmentLineItem

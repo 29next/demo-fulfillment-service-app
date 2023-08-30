@@ -44,6 +44,7 @@ class Product(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='products/', null=True,)
     sku = models.CharField(max_length=255)
     num_in_stock = models.IntegerField(help_text='Num Available', default=0)
 
