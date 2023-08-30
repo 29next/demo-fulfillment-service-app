@@ -1,5 +1,8 @@
+import os
 import json
+import urllib
 
+from django.core.files import File
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseGone
 from django.utils.decorators import method_decorator
@@ -72,6 +75,23 @@ class FulfillmentOrderNotificationReceiver(View):
                             sku=line['sku'],
                             qty=line['quantity']
                         )
+                        # update product image
+                        product_image_url = line.get('product_image', None)
+                        if not product.image and product_image_url:
+                            result = urllib.request.urlretrieve(product_image_url)
+                            product.image.save(
+                                os.path.basename(product_image_url),
+                                File(open(result[0], 'rb'))
+                            )
+                        # update product name
+                        product_name = line.get('product_title', None)
+                        print(product_name)
+                        print(product.name)
+                        if product_name and product.name != product_name:
+                            print(product_name)
+                            product.name = product_name
+                            product.save()
+
                     # Accept the fulfillment request
                     message = 'Fulfillment will be processed shortly.'
                     Api(store.ref_id, store.api_token).accept_fulfillment_request(each['id'], message)
