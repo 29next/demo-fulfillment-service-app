@@ -1,6 +1,7 @@
 import os
 import json
 import urllib
+import logging
 
 from django.core.files import File
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,6 +19,7 @@ from .forms import FulfillmentForm
 from . import filters as filters
 from . import tables as tables
 
+logger = logging.getLogger(__name__)
 
 @method_decorator(csrf_exempt, name='dispatch')
 class FulfillmentOrderNotificationReceiver(View):
@@ -39,6 +41,8 @@ class FulfillmentOrderNotificationReceiver(View):
         store = Store.objects.get(ref_id=store_ref_id)
 
         if store and request_type == 'fulfillment_requested':
+
+            logger.debug("Fulfillment request received.")
 
             open_fulfillment_requests = Api(
                 store.ref_id, store.api_token).get_requested_fulfillment_orders()
@@ -85,10 +89,7 @@ class FulfillmentOrderNotificationReceiver(View):
                             )
                         # update product name
                         product_name = line.get('product_title', None)
-                        print(product_name)
-                        print(product.name)
                         if product_name and product.name != product_name:
-                            print(product_name)
                             product.name = product_name
                             product.save()
 
@@ -101,7 +102,7 @@ class FulfillmentOrderNotificationReceiver(View):
                     Api(store.ref_id, store.api_token).reject_fulfillment_request(each['id'], message)
 
         elif store and request_type == 'cancellation_requested':
-
+            logger.debug("Fulfillment cancellation request received.")
             open_cancellation_requests = Api(
                 store.ref_id, store.api_token).get_cancellation_requested_fulfillment_orders()
 
