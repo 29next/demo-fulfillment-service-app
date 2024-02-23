@@ -156,6 +156,14 @@ MEDIA_ROOT = str(BASE_DIR / "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Logging
+
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+}
+
+
 # Django Tables 2
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap5.html'
 
@@ -185,6 +193,7 @@ CLIENT_ID = os.environ['CLIENT_ID']
 CLIENT_SECRET = os.environ['CLIENT_SECRET']
 SCOPES = 'fulfillment_service:read fulfillment_service:write catalogue:read catalogue:write webhooks:read webhooks:write'
 
+STORE_API_VERSION = '2024-04-01'
 WEBHOOK_NAME = 'Demo Fulfillment Service App'
 WEBHOOK_EVENTS = ['app.uninstalled']
 WEBHOOK_SECRET = 'ss234p8xaasdfyuiyu3n9zwrrik1qmavf'

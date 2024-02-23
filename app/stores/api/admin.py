@@ -16,6 +16,7 @@ class Api(object):
         headers = {
             'content-type': 'application/json',
             'Authorization': 'Bearer {}'.format(self.access_token),
+            'X-29next-API-Version': settings.STORE_API_VERSION,
         }
         return headers
 
@@ -116,6 +117,7 @@ class Api(object):
             'events': events,
             'name': name,
             'target': target,
+            'version': settings.STORE_API_VERSION,
             'secret_key': settings.WEBHOOK_SECRET
         }
         return self._post(path, data)
