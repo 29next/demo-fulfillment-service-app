@@ -17,21 +17,23 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # load .env file for config
-load_dotenv()
+# load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c5f%y-!bli)cn#eixeirw^s!5c72++zsw49!9-vr+x5u(w*fsg'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-c5f%y-!bli)cn#eixeirw^s!5c72++zsw49!9-vr+x5u(w*fsg')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
+
+APP_DOMAIN = os.getenv('APP_DOMAIN', '')
 
 ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted
-CSRF_TRUSTED_ORIGINS = ['https://localdev.alexphelps.me']
+CSRF_TRUSTED_ORIGINS = [APP_DOMAIN]
 
 
 # Application definition
@@ -181,16 +183,13 @@ ACCOUNT_FORMS = {
     'login': 'users.forms.CustomLoginForm',
 }
 
-# Primary Host URL
-HOST_URL = 'https://localdev.alexphelps.me/'
-
 # Fulfillment Request Receiver
-LOCATION_CALLBACK_URL = HOST_URL + 'fulfillments/'
+LOCATION_CALLBACK_URL = APP_DOMAIN + 'fulfillments/'
 
 
-APP_DOMAIN = os.environ['APP_DOMAIN']
-CLIENT_ID = os.environ['CLIENT_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
+APP_DOMAIN = os.getenv('APP_DOMAIN', '')
+CLIENT_ID = os.getenv('CLIENT_ID', '')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET', '')
 SCOPES = 'fulfillment_service:read fulfillment_service:write catalogue:read catalogue:write webhooks:read webhooks:write'
 
 STORE_API_VERSION = '2024-04-01'
