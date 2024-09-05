@@ -33,7 +33,7 @@ APP_DOMAIN = os.getenv('APP_DOMAIN', '')
 ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted
-CSRF_TRUSTED_ORIGINS = [APP_DOMAIN]
+CSRF_TRUSTED_ORIGINS = ['https://' + APP_DOMAIN]
 
 
 # Application definition
