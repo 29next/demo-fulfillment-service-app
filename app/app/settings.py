@@ -28,12 +28,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-c5f%y-!bli)cn#eixeirw^s!5c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-APP_DOMAIN = os.getenv('APP_DOMAIN', '')
+APP_DOMAIN = 'https://' + os.getenv('APP_DOMAIN', '')
 
 ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted
-CSRF_TRUSTED_ORIGINS = ['https://' + APP_DOMAIN]
+CSRF_TRUSTED_ORIGINS = [APP_DOMAIN]
 
 
 # Application definition
@@ -155,13 +155,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'staticfiles')
-STATIC_URL = 'static/'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 
 
 # Media files
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'mediafiles')
-MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -197,7 +201,6 @@ ACCOUNT_FORMS = {
 LOCATION_CALLBACK_URL = APP_DOMAIN + 'fulfillments/'
 
 
-APP_DOMAIN = os.getenv('APP_DOMAIN', '')
 CLIENT_ID = os.getenv('CLIENT_ID', '')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET', '')
 SCOPES = 'fulfillment_service:read fulfillment_service:write catalogue:read catalogue:write webhooks:read webhooks:write'
