@@ -190,7 +190,7 @@ ACCOUNT_FORMS = {
 }
 
 # Fulfillment Request Receiver
-LOCATION_CALLBACK_URL = APP_DOMAIN + 'fulfillments/'
+LOCATION_CALLBACK_URL = APP_DOMAIN + '/fulfillments/'
 
 
 CLIENT_ID = os.getenv('CLIENT_ID', '')
