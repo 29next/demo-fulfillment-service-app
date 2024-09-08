@@ -1,3 +1,3 @@
-web: gunicorn --pythonpath app app.wsgi:application
+web: gunicorn app.wsgi:application
 
-release: sh -c 'cd app && python manage.py migrate --no-input && python manage.py collectstatic --no-input'
+release: django-admin migrate --no-input && django-admin collectstatic --no-input
