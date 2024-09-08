@@ -171,7 +171,6 @@ LOGGING = {
     "disable_existing_loggers": False,  # retain the default loggers
 }
 
-
 # Django Tables 2
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap5.html'
 
