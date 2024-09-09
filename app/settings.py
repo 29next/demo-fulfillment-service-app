@@ -36,7 +36,6 @@ ALLOWED_HOSTS = ['*']
 # CSRF Trusted
 CSRF_TRUSTED_ORIGINS = [APP_DOMAIN]
 
-
 # Application definition
 LOCAL_APPS = [
     'fulfillments',
@@ -57,7 +56,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'django_tables2',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+     'watchman',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
