@@ -1,11 +1,19 @@
-FROM calltracker/calltracker-python-base:latest
+FROM python:3.10-slim-buster
 
+WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app
 
-
-WORKDIR /app
+# Install system packages required by Wagtail and Django.
+RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
+    build-essential curl \
+    libpq-dev \
+    libmariadbclient-dev \
+    libjpeg62-turbo-dev \
+    zlib1g-dev \
+    libwebp-dev \
+ && rm -rf /var/lib/apt/lists/*
 
 # RUN addgroup --system django \
 #     && adduser --system --ingroup django django
