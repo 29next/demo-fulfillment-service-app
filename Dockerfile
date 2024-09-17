@@ -23,4 +23,4 @@ RUN /app/manage.py check
 
 RUN /app/manage.py collectstatic --noinput --clear
 
-CMD ["uwsgi", "--ini=uwsgi"]
+# CMD ["uwsgi", "--ini=uwsgi"]
