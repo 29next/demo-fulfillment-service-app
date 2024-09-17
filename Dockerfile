@@ -16,5 +16,7 @@ WORKDIR /app
 COPY /app /app
 COPY /deploy /app
 
+RUN ls -la
+
 RUN /app/manage.py collectstatic --noinput --clear
 
