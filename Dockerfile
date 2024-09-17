@@ -13,8 +13,8 @@ RUN pip install -r /requirements.txt
 # Copy project code
 WORKDIR /app
 
-COPY /app .
-COPY /deploy .
+COPY /app /app
+COPY /deploy /app
 
 RUN /app/manage.py collectstatic --noinput --clear
 
