@@ -32,4 +32,4 @@ RUN /app/manage.py collectstatic --noinput --clear
 # USER django
 
 # Run application
-CMD gunicorn app.wsgi:application
+# CMD gunicorn app.wsgi:application
