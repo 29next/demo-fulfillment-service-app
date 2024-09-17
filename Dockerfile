@@ -19,5 +19,7 @@ COPY /deploy /app
 RUN pwd
 RUN tree
 
+RUN /app/manage.py check
+
 RUN /app/manage.py collectstatic --noinput --clear
 
