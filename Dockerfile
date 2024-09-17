@@ -7,8 +7,8 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     build-essential curl libpq-dev ffmpeg python3-scipy tree
 
 # Requirements are installed here to ensure they will be cached.
-COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
 
 # Copy project code
 WORKDIR /app
