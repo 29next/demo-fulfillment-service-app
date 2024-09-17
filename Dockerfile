@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install system packages required by Wagtail and Django.
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-    build-essential curl libpq-dev ffmpeg python3-scipy
+    build-essential curl libpq-dev ffmpeg python3-scipy tree
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements.txt /requirements.txt
@@ -17,7 +17,7 @@ COPY /app /app
 COPY /deploy /app
 
 RUN pwd
-RUN ls -la
+RUN tree
 
 RUN /app/manage.py collectstatic --noinput --clear
 
