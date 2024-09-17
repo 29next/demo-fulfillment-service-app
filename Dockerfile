@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED=1 \
 # Install system packages required by Wagtail and Django.
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential curl \
-    libpq-dev ffmpeg
+    libpq-dev ffmpeg python3-scipy
 #     libmariadbclient-dev \
 #     libjpeg62-turbo-dev \
 #     zlib1g-dev \
