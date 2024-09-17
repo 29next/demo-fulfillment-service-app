@@ -10,17 +10,16 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
+# Add Deploy files
+COPY /deploy /app
+
 # Copy project code
 WORKDIR /app
 
 COPY /app /app
-COPY /deploy /app
-
-RUN pwd
-RUN tree
 
 RUN /app/manage.py check
 
 RUN /app/manage.py collectstatic --noinput --clear
 
-CMD ["uwsgi", "--chdir=/app","--ini=/app/uwsgi.ini"]
+# CMD ["uwsgi", "--chdir=/app","--ini=/app/uwsgi.ini"]
