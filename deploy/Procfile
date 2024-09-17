@@ -1,3 +1,3 @@
-web: bash -c "uwsgi --chdir=/app --ini=/app/uwsgi.ini"
+web: /usr/local/bin/uwsgi --ini=uwsgi.ini
 
 release: python manage.py migrate --no-input && ptyon manage.py collectstatic --no-input
