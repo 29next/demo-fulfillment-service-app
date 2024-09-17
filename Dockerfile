@@ -13,8 +13,8 @@ RUN pip install -r /requirements.txt
 # Copy project code
 WORKDIR /app
 
-COPY . /app
-COPY /deploy /app
+COPY . .
+COPY /deploy .
 
 RUN ls -la
 
