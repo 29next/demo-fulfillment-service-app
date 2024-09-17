@@ -14,6 +14,7 @@ RUN pip install -r /requirements.txt
 WORKDIR /app
 
 COPY /app .
+COPY /deploy .
 
 RUN /app/manage.py collectstatic --noinput --clear
 
