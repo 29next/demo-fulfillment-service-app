@@ -22,4 +22,6 @@ RUN /app/manage.py check
 
 RUN /app/manage.py collectstatic --noinput --clear
 
+RUN which uwsgi
+
 # CMD ["uwsgi", "--chdir=/app","--ini=/app/uwsgi.ini"]
