@@ -1,0 +1,58 @@
+services:
+
+  dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - ./app:/app
+    depends_on:
+      - db
+    ports:
+      - "3333:8080"
+    env_file:
+      - dev.env
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=fulfillment_service_app
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+        - ./app:/app
+    depends_on:
+      - rabbitmq
+      - db
+    env_file:
+      - dev.env
+    command: celery -A app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+        - ./app:/app
+    depends_on:
+      - rabbitmq
+      - db
+    env_file:
+      - dev.env
+    command: celery -A app worker -l info -Q celery --without-heartbeat
+
+  rabbitmq:
+      image: rabbitmq:3.13.7-management
+      ports:
+          - "15672:15672"
+          - "5672:5672"
+
+volumes:
+  postgres_data:

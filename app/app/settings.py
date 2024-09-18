@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-c5f%y-!bli)cn#eixeirw^s!5c72++zsw49!9-vr+x5u(w*fsg')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG =  os.getenv('DEBUG', 1),
 
 APP_DOMAIN = 'https://' + os.getenv('APP_DOMAIN', '')
 
@@ -54,10 +54,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'django_tables2',
     'crispy_forms',
     'crispy_bootstrap5',
-     'watchman',
+    'django_celery_beat',
+    'django_tables2',
+    'watchman',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -172,6 +173,9 @@ LOGGING = {
     "disable_existing_loggers": False,  # retain the default loggers
 }
 
+# Celery
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', '')
+
 # Django Tables 2
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap5.html'
 
@@ -192,7 +196,7 @@ ACCOUNT_FORMS = {
 # Fulfillment Request Receiver
 LOCATION_CALLBACK_URL = APP_DOMAIN + '/fulfillments/'
 
-
+# 29 Next App
 CLIENT_ID = os.getenv('CLIENT_ID', '')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET', '')
 SCOPES = 'fulfillment_service:read fulfillment_service:write catalogue:read catalogue:write webhooks:read webhooks:write'
