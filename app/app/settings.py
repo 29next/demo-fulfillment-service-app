@@ -14,25 +14,27 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # load .env file for config
-load_dotenv()
+# load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-c5f%y-!bli)cn#eixeirw^s!5c72++zsw49!9-vr+x5u(w*fsg'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-c5f%y-!bli)cn#eixeirw^s!5c72++zsw49!9-vr+x5u(w*fsg')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  os.getenv('DEBUG', 1),
+
+APP_DOMAIN = 'https://' + os.getenv('APP_DOMAIN', '')
 
 ALLOWED_HOSTS = ['*']
 
 # CSRF Trusted
-CSRF_TRUSTED_ORIGINS = ['https://localdev.alexphelps.me']
-
+CSRF_TRUSTED_ORIGINS = [APP_DOMAIN]
 
 # Application definition
 LOCAL_APPS = [
@@ -52,9 +54,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'django_tables2',
     'crispy_forms',
-    'crispy_bootstrap5'
+    'crispy_bootstrap5',
+    'django_celery_beat',
+    'django_tables2',
+    'watchman',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -103,11 +107,15 @@ AUTHENTICATION_BACKENDS = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME', ''),
+        'USER': os.getenv('DATABASE_USER', 'postgres'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', ''),
+        'HOST': os.getenv('DATABASE_HOST', ''),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
+        'CONN_MAX_AGE': 600
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -143,13 +151,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATICFILES_DIRS =[os.path.join(BASE_DIR, 'static')]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 
 
 # Media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+MEDIA_URL = '/media/'
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = str(BASE_DIR / "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -163,6 +174,8 @@ LOGGING = {
     "disable_existing_loggers": False,  # retain the default loggers
 }
 
+# Celery
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', '')
 
 # Django Tables 2
 DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap5.html'
@@ -181,16 +194,12 @@ ACCOUNT_FORMS = {
     'login': 'users.forms.CustomLoginForm',
 }
 
-# Primary Host URL
-HOST_URL = 'https://localdev.alexphelps.me/'
-
 # Fulfillment Request Receiver
-LOCATION_CALLBACK_URL = HOST_URL + 'fulfillments/'
+LOCATION_CALLBACK_URL = APP_DOMAIN + '/fulfillments/'
 
-
-APP_DOMAIN = os.environ['APP_DOMAIN']
-CLIENT_ID = os.environ['CLIENT_ID']
-CLIENT_SECRET = os.environ['CLIENT_SECRET']
+# 29 Next App
+CLIENT_ID = os.getenv('CLIENT_ID', '')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET', '')
 SCOPES = 'fulfillment_service:read fulfillment_service:write catalogue:read catalogue:write webhooks:read webhooks:write'
 
 STORE_API_VERSION = '2024-04-01'
