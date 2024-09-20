@@ -12,6 +12,7 @@ services:
     ports:
       - "3333:8080"
     env_file:
+      - app.env
       - dev.env
   db:
     image: postgres:16
