@@ -1,5 +1,6 @@
 .tmp/
 .env
+app.env
 db.sqlite3
 /app/media/
 # Byte-compiled / optimized / DLL files

@@ -20,51 +20,86 @@ This app demonstrates the core concepts of a [Fulfillment Service App](https://d
 
 ### How to Setup
 
-This app uses [Django](https://docs.djangoproject.com/en/4.1/intro/install/), you can follow Django install guides to ensure you have Python in your local environment.
-
 #### Create App In Partner Account
-The first step is to create an App in your 29 Next Partner Account. You'll need your app Client ID and Client Secret later on in the setup process.
+The first step is to create an [App](https://developers.29next.com/docs/apps/) in your [29 Next Partner Account](https://accounts.29next.com/partners/). You'll need your app Client ID and Client Secret later on in the setup process.
 
-#### Install Dependencies
-```
-pip install -r requirements.txt
-```
+You need your App Client ID and Client Secret for the [Oauth install flow](https://developers.29next.com/docs/apps/oauth/).
+
+Take note of your App `Client ID` and `Client Secret`, you'll need it when configuring your app.
+
+#### Install Docker & Docker Compose
+
+The demo app uses Docker and Docker Compose to setup a full development environment with Django, Postgres, Celery, and RabbitMQ.
+
+##### Option 1 - Install Docker Desktop
+
+- Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+##### Option 2 - Manual Install
+
+- Install [Docker](https://docs.docker.com/engine/)
+- Install [Docker Compose](https://docs.docker.com/compose/)
+
+
 #### Setup Public Tunnel
 
 To access your localhost for app development, you can use [Ngrok](https://ngrok.com/) or [LocalTunnel](https://localtunnel.github.io/www/) to create and open a public tunnel to your local machine.
 
 
-#### Environment Variables
-
-| Variable | Description|
-|--- | --- |
-|APP_DOMAIN| Your domain when running the app (ie your public tunnel url).|
-|CLIENT_ID| Your App Client ID found in your partner account. |
-|CLIENT_SECRET| Your App Client Secret found in your partner account. |
-
-To run this Django project, you'll need to set environment variables with your local app domain, app client id and client secret (from your 29 Next app).
-
-You can set these directly in your terminal or create an `.env` file inside the `app` directory.
+Your tunnel should expose port `3000`, take note of your public domain for the next setup.
 
 
-#### Run Django App
+#### Update your App Oauth Settings
 
-To run the Django app on your local, use the following command.
-
-*Django port needs to match the public tunnel port.*
+Update your App Oauth **Redirect URLs** to match your local tunnel domain.
 
 ```
-cd app/
-python manage.py runserver 0.0.0.0:3333
+https://<YOUR LOCAL TUNNEL DOMAIN>/stores/auth/setup/
 ```
 
-You should now be able to access the app locally. You'll need to create a super user to login with, use the following command:
-```
-python manage.py createsuperuser
+
+### Configure Your Application
+
+To run the app, we need to configure it to use your local tunnel domain and Oauth credentials.
+
+```bash
+source setup.sh
 ```
 
-The full Django admin is available at `/admin/`
+This script will configure environment variables in app.env file.
+
+
+#### Run Application
+
+To run the application on your local, use the following command.
+
+In a new terminal
+
+```bash
+docker compose up
+```
+
+You should now be able to access the app on your tunnel domain and localy at `localhost:3000`.
+
+#### Migrate Database & Create Super User
+
+With your application now running, you need to migrate the database and create a super user.
+
+In a new terminal, shell into your running django container
+
+```bash
+docker compose exec app bash
+```
+
+Once inside the container, run this command to migrate the database and create a superuser.
+
+```bash
+python manage.py migrate && python manage.py createsuperuser
+```
+
+The full Django admin is available at `http://localhost:3000/admin/`
 
 #### Install on Development Store
+
 You can now connect your app to your development store which will initiate the Oauth setup flow and configure Admin API access. :tada:
 
